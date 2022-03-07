@@ -1,0 +1,174 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+
+<body>
+<div style="margin: 100px;">
+<p class="font_1 result" style=""></p>
+<p class="font_1 result" style=""></p>
+</div>
+</body>
+
+
+
+
+<style>
+p.result{
+	color:deepskyblue;
+	font-size:40px;
+	line-height: 64px;
+	width: 860px;
+	box-sizing: border-box;
+}
+
+ @keyframes cursor{ 
+      0%{border-right: 1px solid #fff} 
+      50%{border-right: 1px solid #000} 
+      100%{border-right: 1px solid #fff} 
+    }
+
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+.font_1{font-family: 'Gamja Flower', cursive;}
+
+html{
+background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),
+url('https://images.pexels.com/photos/4737484/pexels-photo-4737484.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+backdrop-filter: contrast(0.5);
+}
+</style>
+
+
+
+
+
+
+<script>
+
+//타이핑할 문장
+var result  = "저는 이 책을 읽는 초보 엄마 아빠들이 저와 비슷한 후회를 하지 않기를 진심으로 바랍니다. 아이가 바라는 것은 완벽하고 훌륭하게 자신을 돌보는 부모가 아니라 언제든 자신과 눈 마주치고, 자신의 말을 잘 들어주며, 마음껏 사랑을 전하는 부모입니다. 그러니 그 어떤 순간에도 '부모로서 나는 너무 부족하다'면서 자책하지 말고, 최대한 아이와 함께 하는 시간을 즐기세요. 아이가 부모를 절대적으로 필요로 하는 시간은 금방 지나가 버릴 테니까요.";
+result = "　" + result;
+
+// result = "　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　" + result;
+
+
+
+
+
+
+
+// https://westzero.tistory.com/112
+String.prototype.toKorChars = function() { 
+  var cCho = [ 'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ' ], 
+      cJung = [ 'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ' ], 
+      cJong = [ '', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ' ], cho, jung, jong; 
+  var str = this, 
+      cnt = str.length, 
+      chars = [], 
+      cCode; 
+  for (var i = 0; i < cnt; i++) { 
+    cCode = str.charCodeAt(i); 
+    if (cCode == 32) { 
+      chars.push(" ");
+      continue;
+    } // 한글이 아닌 경우 
+    if (cCode < 0xAC00 || cCode > 0xD7A3) { 
+      chars.push(str.charAt(i)); continue; 
+    } 
+    cCode = str.charCodeAt(i) - 0xAC00; 
+
+    jong = cCode % 28; 
+    // 종성 
+    jung = ((cCode - jong) / 28 ) % 21 
+
+    // 중성 
+    cho = (((cCode - jong) / 28 ) - jung ) / 21 
+    // 초성 
+
+    //기본 코드 테스트가 ㅌㅔㅅ-ㅌ- 형식으로 저장됨 
+    // chars.push(cCho[cho], cJung[jung]); 
+    // if (cJong[jong] !== '') { 
+    //     chars.push(cJong[jong]); 
+    //     } 
+
+
+    //  테스트라는 문장이 있으면 ㅌ테ㅅ스ㅌ트 형식으로 저장되도록함 (타이핑을 위해서)
+    chars.push(cCho[cho]);
+    chars.push(String.fromCharCode( 44032 + (cho * 588) + (jung  * 28)));
+    if (cJong[jong] !== '') { 
+      chars.push(String.fromCharCode( 44032 + (cho * 588) + (jung  * 28) + jong ));
+    }
+
+  } 
+
+  return chars; 
+}
+
+
+//타이핑할 문장
+//var result  = "동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세";
+var typeing1=[];
+result = result.split(''); // 한글자씩자름
+
+//각글자 초성,중성,종성으로 나눔
+for(var i =0; i<result.length; i++){
+  typeing1[i]=result[i].toKorChars();
+}
+console.log(typeing1);
+
+//출력할 엘리먼트요소 가져옴 
+var resultDiv = document.getElementsByClassName("result")[0];
+
+//
+var text = "";
+var i=0; 
+var j=0; 
+var text = '';
+
+//총글자수
+var imax = typeing1.length;
+
+//setInterval을 이용해 반복적으로 출력 
+var inter = setInterval(typi,50);
+
+
+function typi(){
+  //글자수만큼 반복후 종료 
+  if(i<=imax-1){
+    //각 글자가 초성 중성 종성 순서대로 추가되도록 
+    var jmax = typeing1[i].length;
+    resultDiv.innerHTML = text + typeing1[i][j];
+    j++;
+    if(j==jmax){
+      text+=  typeing1[i][j-1];//초성중성종성 순서대로 출력된 글자는 저장 ( 다음 글자와 이어붙이기 위해서 )
+      i++;
+      j=0;
+    }
+  } else{
+    clearInterval(inter);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
